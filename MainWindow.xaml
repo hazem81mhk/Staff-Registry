@@ -5,28 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Staff_Registry"
         mc:Ignorable="d"
-        Title="Stuff Registry" Height="600" Width="1300" WindowStartupLocation="CenterScreen">
+        Title="Stuff Registry" Height="600" Width="1800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="12*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <Border
-            Grid.Column="1"
-            Grid.Row="1"
-            Background="LightGray"
-            CornerRadius="30"
-            Margin="10">
+        <Border Grid.Column="1" Grid.Row="1" Background="LightGray" CornerRadius="30" Margin="10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
@@ -49,82 +44,73 @@
                     <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="1" Grid.Row="1" Text="Id" FontSize="20" TextAlignment="Left" Margin="5"/>
-                    <TextBox Grid.Column="2" Grid.Row="1" Margin="10 0 0 0 " Width="200" Height="25"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="Id" FontSize="20" TextAlignment="Left" Margin="5"/>
+                <TextBox Grid.Column="2" Grid.Row="1" FontSize="15" Margin="10 0 0 0 " Width="200" Height="25" x:Name="TBID" IsReadOnly="True"/>
 
-                    <TextBlock Grid.Column="1" Grid.Row="2" Text="First Name" FontSize="20" TextAlignment="Left" Margin="5"/>
-                    <TextBox Grid.Column="2" Grid.Row="2" Margin="10 0 0 0 " Width="200" Height="25"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="FirstName" FontSize="20" TextAlignment="Left" Margin="5"/>
+                <TextBox Grid.Column="2" Grid.Row="2" FontSize="15" Margin="10 0 0 0 " Width="200" Height="25" x:Name="TBFirstName"/>
 
-                <TextBlock Grid.Column="1" Grid.Row="3"  Text="Last Name" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <TextBox Grid.Column="2" Grid.Row="3"  Margin="10 0 0 0 " Width="200" Height="25"/>
+                <TextBlock Grid.Column="1" Grid.Row="3"  Text="LastName" FontSize="20" TextAlignment="Left" Margin="5"/>
+                <TextBox Grid.Column="2" Grid.Row="3" FontSize="15" Margin="10 0 0 0 " Width="200" Height="25" x:Name="TBLastName"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="4"  Text="Gender" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <ComboBox Grid.Column="2" Grid.Row="4"  Margin="10 0 0 0 " Width="200" Height="30"/>
+                <ComboBox Grid.Column="2" Grid.Row="4" FontSize="15" Margin="10 0 0 0 " Width="200" Height="30" x:Name="CBGender"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="5"  Text="Communication" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <ComboBox Grid.Column="2" Grid.Row="5"  Margin="10 0 0 0 " Width="200" Height="30"/>
+                <ComboBox Grid.Column="2" Grid.Row="5" FontSize="15" Margin="10 0 0 0 " Width="200" Height="30" x:Name="CBCommunication"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="6"  Text="Decision making" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <ComboBox Grid.Column="2" Grid.Row="6"  Margin="10 0 0 0 " Width="200" Height="30"/>
+                <ComboBox Grid.Column="2" Grid.Row="6" FontSize="15" Margin="10 0 0 0 " Width="200" Height="30" x:Name="CBDecisionMaking"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="7"  Text="Problem solving" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <ComboBox Grid.Column="2" Grid.Row="7"  Margin="10 0 0 0 " Width="200" Height="30"/>
+                <ComboBox Grid.Column="2" Grid.Row="7" FontSize="15" Margin="10 0 0 0 " Width="200" Height="30" x:Name="CBProblemSolving"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="8"  Text="Listening" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <ComboBox Grid.Column="2" Grid.Row="8"  Margin="10 0 0 0 " Width="200" Height="30"/>
+                <ComboBox Grid.Column="2" Grid.Row="8" FontSize="15" Margin="10 0 0 0 " Width="200" Height="30" x:Name="CBListening"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="9"  Text="Leadership" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <ComboBox Grid.Column="2" Grid.Row="9"  Margin="10 0 0 0 " Width="200" Height="30"/>
+                <ComboBox Grid.Column="2" Grid.Row="9" FontSize="15" Margin="10 0 0 0 " Width="200" Height="30" x:Name="CBLeadership"/>
 
                 <TextBlock Grid.Column="1" Grid.Row="10"  Text="Accuracy" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <ComboBox Grid.Column="2" Grid.Row="10"  Margin="10 0 0 0 " Width="200" Height="30"/>
-
+                <ComboBox Grid.Column="2" Grid.Row="10" FontSize="15" Margin="10 0 0 0 " Width="200" Height="30" x:Name="CBAccuracy"/>
             </Grid>
         </Border>
-        <Border
-            Grid.Column="2"
-            Grid.Row="1"
-            Background="LightGray"
-            CornerRadius="30"
-            Margin="10">
-            <DataGrid
-                Margin="15">
-                
+        <Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Background="LightGray" CornerRadius="30" Margin="10">
+            <DataGrid x:Name="DG" Margin="20" HorizontalAlignment="Left" AutoGenerateColumns="False" TextBlock.FontSize="15" SelectedCellsChanged="DGSelectedChange">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="Background" Value="Gray"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="BorderBrush" Value="LightGray"/>
+                    </Style>
+
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header=" Id" Binding="{Binding Path=ID}" IsReadOnly="True" Width="1*"/>
+                    <DataGridTextColumn Header=" Firstname" Binding="{Binding Path=FirstName}" IsReadOnly="True" Width="3*"/>
+                    <DataGridTextColumn Header=" Lastname" Binding="{Binding Path=LastName}" IsReadOnly="True" Width="3*" />
+                    <DataGridTextColumn Header=" Gender" IsReadOnly="True" Binding="{Binding Path=Gender}" Width="3*"/>
+                    <DataGridTextColumn Header=" Communication" IsReadOnly="True" Binding="{Binding Path=Communication}" Width="4*"/>
+                    <DataGridTextColumn Header=" Decision making" IsReadOnly="True" Binding="{Binding Path=Decision_Making}" Width="4*"/>
+                    <DataGridTextColumn Header=" Problem solving" IsReadOnly="True" Binding="{Binding Path=Problem_Solving}" Width="4*"/>
+                    <DataGridTextColumn Header=" Listening" IsReadOnly="True" Binding="{Binding Path=Listening}" Width="4*"/>
+                    <DataGridTextColumn Header=" Leadership" IsReadOnly="True" Binding="{Binding Path=Leadership}" Width="4*"/>
+                    <DataGridTextColumn Header=" Accuracy" IsReadOnly="True" Binding="{Binding Path=Accuracy}" Width="4*"/>
+                </DataGrid.Columns>
             </DataGrid>
-            
+
         </Border>
         <Border
-            Grid.Column="1"
-            Grid.Row="2"
-            Background="LightGray"
-            CornerRadius="30"
-            Margin="5">
-            <StackPanel Margin="15" Orientation="Horizontal">
-                <Button Height="40" Width="80" Margin="10 0 0 0" Content="New" FontSize="20"/>
-                <Button Height="40" Width="80" Margin="10 0 0 0" Content="Add" FontSize="20"/>
-                <Button Height="40" Width="80" Margin="10 0 0 0" Content="Delete" FontSize="20"/>
-                <Button Height="40" Width="80" Margin="10 0 0 0" Content="Search" FontSize="20"/>
-
-
+            Grid.Column="1" Grid.Row="2" Background="LightGray" CornerRadius="20" Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <Button Height="40" Width="80" Margin="20 0 0 0" Content="New" FontSize="20" Click="NewClick"/>
+                <Button Height="40" Width="80" Margin="5 0 0 0" Content="Add" FontSize="20" Click="AddClick"/>
+                <Button Height="40" Width="80" Margin="5 0 0 0" Content="Change" FontSize="20" Click="ChangeClick"/>
+                <Button Height="40" Width="80" Margin="5 0 0 0" Content="Delete" FontSize="20" Click="DeleteClick"/>
+                <Button Height="40" Width="80" Margin="5 0 0 0" Content="Search" FontSize="20" Click="SearchClick"/>
             </StackPanel>
-            
         </Border>
     </Grid>
 </Window>
 
-
-<!--<StackPanel
-                Orientation="Horizontal">
-    <TextBlock
-                    Text="Id"
-                    FontSize="25"
-                    TextAlignment="Left"
-                    Margin="10 20 10 10"
-                    
-                    />
-    <TextBox
-                    Margin="0 50 10 10"
-                    Width="150"
-                    Height="30"
-                    />
-</StackPanel>-->
