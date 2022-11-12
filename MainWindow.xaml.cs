@@ -52,6 +52,7 @@ namespace Staff_Registry
 
         private void InitalizeComponentIndex()
         {
+            TBID.Text = "";
             TBFirstName.Text = "";
             TBLastName.Text = "";
             CBGender.SelectedIndex = 0;
@@ -159,6 +160,7 @@ namespace Staff_Registry
                 staffManager.StaffList[DG.SelectedIndex] = employee;
                 UppdateDG();
                 UpdateDB();
+                InitalizeComponentIndex();
             }
             else
             {
@@ -168,16 +170,46 @@ namespace Staff_Registry
 
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
-            if (DG.SelectedIndex >= 0)
+
+
+            if (selectedDGIndex >= 0)
             {
-                staffManager.StaffList.RemoveAt(DG.SelectedIndex);
-                UppdateDG();
-                UpdateDB();
+                var result = MessageBox.Show("Are you sure?", "Delet employee",
+                                                MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+                if (result == MessageBoxResult.Yes)
+                {
+                    staffManager.StaffList.RemoveAt(selectedDGIndex);
+                    UppdateDG();
+                    UpdateDB();
+                    InitalizeComponentIndex();
+                }
+            }
+            else
+            {
+                MessageBox.Show("You must select an employee!");
             }
         }
         private void SearchClick(object sender, RoutedEventArgs e)
         {
+            //SearchWindow searchWindow = new SearchWindow();
+            //searchWindow.Show();
+            StaffFilter();
+        }
 
+        public void StaffFilter()
+        {
+            //string str = SearchWindow.SearchInfo;
+            string str = "KUd";
+            if (str !="")
+            {
+                var filteredList = staffManager.StaffList.Where(x => x.LastName.ToLower().Contains(str.ToLower()));
+                DG.ItemsSource = null;
+                DG.ItemsSource = filteredList;
+            }
+            else
+            {
+                UppdateDG();
+            }
         }
 
         private void UppdateDG()
