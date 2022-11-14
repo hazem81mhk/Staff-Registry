@@ -56,12 +56,12 @@ namespace Staff_Registry
             TBFirstName.Text = "";
             TBLastName.Text = "";
             CBGender.SelectedIndex = 0;
-            CBCommunication.SelectedIndex = 2;
-            CBDecisionMaking.SelectedIndex = 2;
-            CBProblemSolving.SelectedIndex = 2;
-            CBListening.SelectedIndex = 2;
-            CBLeadership.SelectedIndex = 2;
-            CBAccuracy.SelectedIndex = 2;
+            CBCommunication.SelectedIndex = 3;
+            CBDecisionMaking.SelectedIndex = 3;
+            CBProblemSolving.SelectedIndex = 3;
+            CBListening.SelectedIndex = 3;
+            CBLeadership.SelectedIndex = 3;
+            CBAccuracy.SelectedIndex = 3;
         }
 
         private void GenerateID()
@@ -156,7 +156,6 @@ namespace Staff_Registry
                            (RatingType)CBListening.SelectedIndex,
                            (RatingType)CBLeadership.SelectedIndex,
                            (RatingType)CBAccuracy.SelectedIndex);
-                //staffManager.StaffList.RemoveAt(DG.SelectedIndex);
                 staffManager.StaffList[DG.SelectedIndex] = employee;
                 UppdateDG();
                 UpdateDB();
@@ -170,8 +169,6 @@ namespace Staff_Registry
 
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
-
-
             if (selectedDGIndex >= 0)
             {
                 var result = MessageBox.Show("Are you sure?", "Delet employee",
@@ -191,20 +188,97 @@ namespace Staff_Registry
         }
         private void SearchClick(object sender, RoutedEventArgs e)
         {
-            //SearchWindow searchWindow = new SearchWindow();
-            //searchWindow.Show();
-            StaffFilter();
+            SearchWindow searchWindow = new SearchWindow();
+            searchWindow.Show();
+            searchWindow.EmployeeProcessorEvent += StaffFilter;
+            searchWindow.CancelClicked += UppdateDG;
         }
 
-        public void StaffFilter()
+        public void StaffFilter(object? sender, EmployeeArgs e)
         {
-            //string str = SearchWindow.SearchInfo;
-            string str = "KUd";
-            if (str !="")
+            Employee employee = e.Employee;
+            List<Employee> staffLis = new List<Employee>();
+            // Using lambda expressions with LINQ
+            if (employee.FirstName != "")
             {
-                var filteredList = staffManager.StaffList.Where(x => x.LastName.ToLower().Contains(str.ToLower()));
+                var staffList = staffManager.StaffList.Where(x => x.FirstName.ToLower().Contains(employee.FirstName.ToLower()));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+
+            }
+            if (employee.LastName != "")
+            {
+                var staffList = staffManager.StaffList.Where(x => x.LastName.ToLower().Contains(employee.LastName.ToLower()));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+            if (employee.Gender != GenderType.Unknown)
+            {
+                var staffList = staffManager.StaffList.Where(x => x.Gender.Equals(employee.Gender));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+            if (employee.Communication != RatingType.Unknown)
+            {
+                var staffList = staffManager.StaffList.Where(x => x.Communication.Equals(employee.Communication));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+            if (employee.Decision_Making != RatingType.Unknown)
+            {
+                var staffList = staffManager.StaffList.Where(x => x.Decision_Making.Equals(employee.Decision_Making));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+
+            if (employee.Problem_Solving != RatingType.Unknown)
+            {
+                var staffList = staffManager.StaffList.Where(x => x.Problem_Solving.Equals(employee.Problem_Solving));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+            if (employee.Listening != RatingType.Unknown)
+            {
+                var staffList = staffManager.StaffList.Where(x => x.Listening.Equals(employee.Listening));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+            if (employee.Leadership != RatingType.Unknown)
+            {
+                var staffList = staffManager.StaffList.Where(x => x.Leadership.Equals(employee.Leadership));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+            if (employee.Accuracy != RatingType.Unknown)
+            {
+                var staffList = staffManager.StaffList.Where(x => x.Accuracy.Equals(employee.Accuracy));
+                foreach (Employee em in staffList)
+                {
+                    staffLis.Add(em);
+                }
+            }
+
+            if (staffLis.Count() > 0)
+            {
+                var staffList = staffLis.Distinct();
                 DG.ItemsSource = null;
-                DG.ItemsSource = filteredList;
+                DG.ItemsSource = staffList;
             }
             else
             {

@@ -20,8 +20,12 @@ namespace Staff_Registry
     /// </summary>
     public partial class SearchWindow : Window
     {
-        public static string SearchInfo = "";
-
+        // Using EventHandler
+        public event EventHandler<EmployeeArgs>? EmployeeProcessorEvent;
+        
+        // Using Event
+        public delegate void CancelClickedDelegate();
+        public event CancelClickedDelegate? CancelClicked;
 
         private string[] gender = Enum.GetNames(typeof(GenderType));
         private string[] rating = Enum.GetNames(typeof(RatingType));
@@ -49,24 +53,52 @@ namespace Staff_Registry
             TBFirstNameSP.Text = "";
             TBLastNameSP.Text = "";
             CBGenderSP.SelectedIndex = 0;
-            CBCommunicationSP.SelectedIndex = 2;
-            CBDecisionMakingSP.SelectedIndex = 2;
-            CBProblemSolvingSP.SelectedIndex = 2;
-            CBListeningSP.SelectedIndex = 2;
-            CBLeadershipSP.SelectedIndex = 2;
-            CBAccuracySP.SelectedIndex = 2;
+            CBCommunicationSP.SelectedIndex = 0;
+            CBDecisionMakingSP.SelectedIndex = 0;
+            CBProblemSolvingSP.SelectedIndex = 0;
+            CBListeningSP.SelectedIndex = 0;
+            CBLeadershipSP.SelectedIndex = 0;
+            CBAccuracySP.SelectedIndex = 0;
         }
         private void SearchClick(object sender, RoutedEventArgs e)
         {
-            if (SearchInfo == "")
-            {
-                MessageBox.Show("You must select ", "Warning", MessageBoxButton.OK, MessageBoxImage.Stop);
-            }
+            Employee employee = new Employee(
+                                        0,
+                                        TBFirstNameSP.Text,
+                                        TBLastNameSP.Text,
+                                        (GenderType)CBGenderSP.SelectedIndex,
+                                        (RatingType)CBCommunicationSP.SelectedIndex,
+                                        (RatingType)CBDecisionMakingSP.SelectedIndex,
+                                        (RatingType)CBProblemSolvingSP.SelectedIndex,
+                                        (RatingType)CBListeningSP.SelectedIndex,
+                                        (RatingType)CBLeadershipSP.SelectedIndex,
+                                        (RatingType)CBAccuracySP.SelectedIndex
+                                        );
+
+            EmployeeArgs args = new EmployeeArgs(employee);
+            EmployeeSearchEventInfoProcessor(args);
         }
 
         private void CancelClick(object sender, RoutedEventArgs e)
         {
+            CloseWindow();
+        }
+
+        public void CloseWindow()
+        {
             this.Close();
+            if (CancelClicked!= null)
+            {
+                CancelClicked.Invoke();    
+            }
+        }
+
+        public void EmployeeSearchEventInfoProcessor(EmployeeArgs args)
+        {
+            if (EmployeeProcessorEvent != null)
+            {
+                EmployeeProcessorEvent(this, args);
+            }
         }
     }
 }
