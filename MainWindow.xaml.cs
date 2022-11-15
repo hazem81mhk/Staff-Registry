@@ -55,7 +55,7 @@ namespace Staff_Registry
             TBID.Text = "";
             TBFirstName.Text = "";
             TBLastName.Text = "";
-            CBGender.SelectedIndex = 0;
+            CBGender.SelectedIndex = 1;
             CBCommunication.SelectedIndex = 3;
             CBDecisionMaking.SelectedIndex = 3;
             CBProblemSolving.SelectedIndex = 3;
@@ -206,7 +206,6 @@ namespace Staff_Registry
                 {
                     staffLis.Add(em);
                 }
-
             }
             if (employee.LastName != "")
             {
@@ -216,7 +215,7 @@ namespace Staff_Registry
                     staffLis.Add(em);
                 }
             }
-            if (employee.Gender != GenderType.Unknown)
+            if (employee.Gender != GenderType.Empty)
             {
                 var staffList = staffManager.StaffList.Where(x => x.Gender.Equals(employee.Gender));
                 foreach (Employee em in staffList)
@@ -224,7 +223,7 @@ namespace Staff_Registry
                     staffLis.Add(em);
                 }
             }
-            if (employee.Communication != RatingType.Unknown)
+            if (employee.Communication != RatingType.Empty)
             {
                 var staffList = staffManager.StaffList.Where(x => x.Communication.Equals(employee.Communication));
                 foreach (Employee em in staffList)
@@ -232,7 +231,7 @@ namespace Staff_Registry
                     staffLis.Add(em);
                 }
             }
-            if (employee.Decision_Making != RatingType.Unknown)
+            if (employee.Decision_Making != RatingType.Empty)
             {
                 var staffList = staffManager.StaffList.Where(x => x.Decision_Making.Equals(employee.Decision_Making));
                 foreach (Employee em in staffList)
@@ -241,7 +240,7 @@ namespace Staff_Registry
                 }
             }
 
-            if (employee.Problem_Solving != RatingType.Unknown)
+            if (employee.Problem_Solving != RatingType.Empty)
             {
                 var staffList = staffManager.StaffList.Where(x => x.Problem_Solving.Equals(employee.Problem_Solving));
                 foreach (Employee em in staffList)
@@ -249,7 +248,7 @@ namespace Staff_Registry
                     staffLis.Add(em);
                 }
             }
-            if (employee.Listening != RatingType.Unknown)
+            if (employee.Listening != RatingType.Empty)
             {
                 var staffList = staffManager.StaffList.Where(x => x.Listening.Equals(employee.Listening));
                 foreach (Employee em in staffList)
@@ -257,7 +256,7 @@ namespace Staff_Registry
                     staffLis.Add(em);
                 }
             }
-            if (employee.Leadership != RatingType.Unknown)
+            if (employee.Leadership != RatingType.Empty)
             {
                 var staffList = staffManager.StaffList.Where(x => x.Leadership.Equals(employee.Leadership));
                 foreach (Employee em in staffList)
@@ -265,7 +264,7 @@ namespace Staff_Registry
                     staffLis.Add(em);
                 }
             }
-            if (employee.Accuracy != RatingType.Unknown)
+            if (employee.Accuracy != RatingType.Empty)
             {
                 var staffList = staffManager.StaffList.Where(x => x.Accuracy.Equals(employee.Accuracy));
                 foreach (Employee em in staffList)
@@ -273,7 +272,6 @@ namespace Staff_Registry
                     staffLis.Add(em);
                 }
             }
-
             if (staffLis.Count() > 0)
             {
                 var staffList = staffLis.Distinct();

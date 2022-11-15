@@ -34,6 +34,7 @@ namespace Staff_Registry
             InitializeComponent();
             InitalizeCBComponents();
             InitalizeComponentIndex();
+            MessageBox.Show("To get right result, you must choose just one field!\n\nCombination give wrong search!", "Information!", MessageBoxButton.OK,MessageBoxImage.Information);
         }
 
 
