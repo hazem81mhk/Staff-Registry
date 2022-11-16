@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Staff_Registry"
         mc:Ignorable="d"
-        Title="Stuff Registry" Height="600" Width="1800" WindowStartupLocation="CenterScreen">
+        Title="Stuff Registry" Height="600" Width="1800" 
+        Left="20"
+        Top="100">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -19,7 +21,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="1" Grid.Row="1" Background="LightGray" CornerRadius="30" Margin="10">
+        <Border Grid.Column="1" Grid.Row="1" Background="LightGray" CornerRadius="30" Margin="10" x:Name="InputPanel">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
@@ -42,8 +44,12 @@
                     <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="Id" FontSize="20" TextAlignment="Left" Margin="5"/>
-                <TextBlock Grid.Column="2" Grid.Row="1" Text="" FontSize="20" TextAlignment="Left" Margin="130 10 0 0" x:Name="TBID"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="Id:" FontSize="20" TextAlignment="Left" Margin="5"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="" FontSize="20" TextAlignment="Left" Margin="35 5 0 0" x:Name="TBID"/>
+
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="Rating score:" FontSize="20" TextAlignment="Left" Margin="40 5 0 0"/>
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="" FontSize="20" TextAlignment="Left" Margin="160 5 0 0" x:Name="TBRating"/>
+
 
                 <TextBlock Grid.Column="1" Grid.Row="2" Text="FirstName" FontSize="20" TextAlignment="Left" Margin="5"/>
                 <TextBox Grid.Column="2" Grid.Row="2" FontSize="15" Margin="10 0 0 0 " Width="200" Height="25" x:Name="TBFirstName"/>
@@ -100,7 +106,7 @@
 
         </Border>
         <Border
-            Grid.Column="1" Grid.Row="2" Background="LightGray" CornerRadius="20" Margin="10">
+            Grid.Column="1" Grid.Row="2" Background="LightGray" CornerRadius="20" Margin="10" x:Name="MainPanel">
             <StackPanel Orientation="Horizontal">
                 <Button Height="40" Width="80" Margin="20 0 0 0" Content="New" FontSize="20" Click="NewClick"/>
                 <Button Height="40" Width="80" Margin="5 0 0 0" Content="Add" FontSize="20" Click="AddClick"/>

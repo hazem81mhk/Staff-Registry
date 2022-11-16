@@ -1,4 +1,8 @@
-﻿using SR_BLL;
+﻿// Hazem Kudaimi November 2022
+
+//A publisher class - class firing events and notifying subscribers
+//through a delegage
+using SR_BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +26,7 @@ namespace Staff_Registry
     {
         // Using EventHandler
         public event EventHandler<EmployeeArgs>? EmployeeProcessorEvent;
-        
+
         // Using Event
         public delegate void CancelClickedDelegate();
         public event CancelClickedDelegate? CancelClicked;
@@ -34,9 +38,9 @@ namespace Staff_Registry
             InitializeComponent();
             InitalizeCBComponents();
             InitalizeComponentIndex();
-            MessageBox.Show("To get right result, you must choose just one field!\n\nCombination give wrong search!", "Information!", MessageBoxButton.OK,MessageBoxImage.Information);
+            MessageBox.Show("To get right result, you must choose just one field!\n\nCombination give wrong search!",
+                "Information!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
-
 
         private void InitalizeCBComponents()
         {
@@ -61,6 +65,7 @@ namespace Staff_Registry
             CBLeadershipSP.SelectedIndex = 0;
             CBAccuracySP.SelectedIndex = 0;
         }
+        
         private void SearchClick(object sender, RoutedEventArgs e)
         {
             Employee employee = new Employee(
@@ -85,16 +90,18 @@ namespace Staff_Registry
             CloseWindow();
         }
 
-        public void CloseWindow()
+        // Raise Event CancelClicked
+        private void CloseWindow()
         {
             this.Close();
-            if (CancelClicked!= null)
+            if (CancelClicked != null)
             {
-                CancelClicked.Invoke();    
+                CancelClicked.Invoke();
             }
         }
 
-        public void EmployeeSearchEventInfoProcessor(EmployeeArgs args)
+        // Raise Event EmployeeProcessorEvent
+        private void EmployeeSearchEventInfoProcessor(EmployeeArgs args)
         {
             if (EmployeeProcessorEvent != null)
             {

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Staff_Registry"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="Manual"
+        Left="20"
+        Top="100"
         Title="SearchWindow" Height="600" Width="500">
     <Grid>
         <Grid.ColumnDefinitions>

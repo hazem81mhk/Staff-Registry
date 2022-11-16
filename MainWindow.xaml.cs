@@ -1,4 +1,7 @@
-﻿using SR_BLL;
+﻿// Hazem Kudaimi November 2022
+
+//A Subscriber class  (a listerner)
+using SR_BLL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +22,26 @@ namespace Staff_Registry
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// This class creates a search window for a search auction
+    /// but does not save the info on the search 
+    /// Receives search information and show it in the datagrid.
+    /// This class is mainly a subscriber of the events fired by 
+    /// the search window class.
     /// </summary>
     public partial class MainWindow : Window
     {
-        public StaffManager staffManager;
+        private StaffManager staffManager;
         private string[] gender = Enum.GetNames(typeof(GenderType));
         private string[] rating = Enum.GetNames(typeof(RatingType));
         private int selectedDGIndex;
-
+        
         private const string file = @"C:\Users\hazem\Desktop\C# III\assignment_3\SR_DLL\DB.csv";
+
+        // Using Action delegate with lambda expression               
+        private Action<string> WriteToMessageBox = str =>
+        {
+            MessageBox.Show("" + str);
+        };
 
         public MainWindow()
         {
@@ -39,6 +53,7 @@ namespace Staff_Registry
             selectedDGIndex = -1;
         }
 
+        #region Initalizing GUI
         private void InitalizeCBComponents()
         {
             CBGender.ItemsSource = gender;
@@ -63,53 +78,16 @@ namespace Staff_Registry
             CBLeadership.SelectedIndex = 3;
             CBAccuracy.SelectedIndex = 3;
         }
+        #endregion
 
-        private void GenerateID()
-        {
-            Employee employee = staffManager.StaffList.Last();
-            int newID = employee.ID + 1;
-            TBID.Text = "" + newID;
-        }
-
-        private void GetDB()
-        {
-            staffManager.StaffList.Clear();
-            var lines = File.ReadAllLines(file);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                var line = lines[i].Split(',');
-                Employee employee = new Employee(int.Parse(line[0]), line[1], line[2],
-                  (GenderType)(int.Parse(line[3])), (RatingType)int.Parse(line[4]), (RatingType)int.Parse(line[5]),
-                   (RatingType)int.Parse(line[6]), (RatingType)int.Parse(line[7]), (RatingType)int.Parse(line[8]),
-                    (RatingType)int.Parse(line[9]));
-                staffManager.StaffList.Add(employee);
-            }
-            UppdateDG();
-        }
-
-        private void DGSelectedChange(object sender, SelectedCellsChangedEventArgs e)
-        {
-            selectedDGIndex = DG.SelectedIndex;
-            if (selectedDGIndex >= 0)
-            {
-                TBID.Text = "" + staffManager.StaffList[selectedDGIndex].ID;
-                TBFirstName.Text = staffManager.StaffList[selectedDGIndex].FirstName;
-                TBLastName.Text = staffManager.StaffList[selectedDGIndex].LastName;
-                CBGender.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Gender;
-                CBCommunication.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Communication;
-                CBDecisionMaking.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Decision_Making;
-                CBProblemSolving.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Problem_Solving;
-                CBListening.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Listening;
-                CBLeadership.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Leadership;
-                CBAccuracy.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Accuracy;
-            }
-        }
+        #region New, Add, Change, Delete, Search Clicked
         private void NewClick(object sender, RoutedEventArgs e)
         {
             selectedDGIndex = -1;
             InitalizeComponentIndex();
             GenerateID();
         }
+
 
         private void AddClick(object sender, RoutedEventArgs e)
         {
@@ -118,7 +96,7 @@ namespace Staff_Registry
             TBLastName.Text.Trim();
             if (TBFirstName.Text == "" || TBLastName.Text == "")
             {
-                MessageBox.Show("You must write first- and lastname!");
+                WriteToMessageBox("You must write first- and lastname!");
             }
             else
             {
@@ -163,7 +141,7 @@ namespace Staff_Registry
             }
             else
             {
-                MessageBox.Show("You must select an employee!");
+                WriteToMessageBox("You must select an employee!");
             }
         }
 
@@ -183,18 +161,28 @@ namespace Staff_Registry
             }
             else
             {
-                MessageBox.Show("You must select an employee!");
+                WriteToMessageBox("You must select an employee!");
             }
         }
+
         private void SearchClick(object sender, RoutedEventArgs e)
         {
             SearchWindow searchWindow = new SearchWindow();
             searchWindow.Show();
+            InputPanel.Visibility = Visibility.Hidden;
+            MainPanel.Visibility = Visibility.Hidden;
             searchWindow.EmployeeProcessorEvent += StaffFilter;
-            searchWindow.CancelClicked += UppdateDG;
+            searchWindow.CancelClicked += searchWindowCancelClicked;
         }
 
-        public void StaffFilter(object? sender, EmployeeArgs e)
+        private void searchWindowCancelClicked()
+        {
+            InputPanel.Visibility = Visibility.Visible;
+            MainPanel.Visibility = Visibility.Visible;
+            UppdateDG();
+        }
+
+        private void StaffFilter(object? sender, EmployeeArgs e)
         {
             Employee employee = e.Employee;
             List<Employee> staffLis = new List<Employee>();
@@ -280,7 +268,60 @@ namespace Staff_Registry
             }
             else
             {
+                MessageBox.Show("No result matched!");
                 UppdateDG();
+            }
+        }
+        #endregion
+
+        #region Help Methods
+        private void GenerateID()
+        {
+            Employee employee = staffManager.StaffList.Last();
+            int newID = employee.ID + 1;
+            TBID.Text = "" + newID;
+        }
+
+        private void DGSelectedChange(object sender, SelectedCellsChangedEventArgs e)
+        {
+            selectedDGIndex = DG.SelectedIndex;
+            if (selectedDGIndex >= 0)
+            {
+                TBID.Text = "" + staffManager.StaffList[selectedDGIndex].ID;
+                TBFirstName.Text = staffManager.StaffList[selectedDGIndex].FirstName;
+                TBLastName.Text = staffManager.StaffList[selectedDGIndex].LastName;
+                CBGender.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Gender;
+                CBCommunication.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Communication;
+                CBDecisionMaking.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Decision_Making;
+                CBProblemSolving.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Problem_Solving;
+                CBListening.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Listening;
+                CBLeadership.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Leadership;
+                CBAccuracy.SelectedIndex = (int)staffManager.StaffList[selectedDGIndex].Accuracy;
+
+                // Count of the rating score of the empolyee competence:
+                //string str = string.Format("{0:0.##}", staffManager.StaffList[selectedDGIndex].CompetenceDegree());
+
+                // Count of the rating score of the empolyee competence: But with another way, by using lambda expressions with LINQ
+                List<int> competenceListAll = new List<int>()
+                {
+                    (int)staffManager.StaffList[selectedDGIndex].Communication,
+                    (int)staffManager.StaffList[selectedDGIndex].Decision_Making,
+                    (int)staffManager.StaffList[selectedDGIndex].Problem_Solving,
+                    (int)staffManager.StaffList[selectedDGIndex].Listening,
+                    (int)staffManager.StaffList[selectedDGIndex].Leadership,
+                    (int)staffManager.StaffList[selectedDGIndex].Accuracy
+                };
+                var competenceList = competenceListAll.Where(x => x > 0).ToList();
+                double CompetenceSum = competenceList.Sum(x => x);
+
+                // Using Func delegate with lambda statement
+                Func<double, double, double> average = (num1, num2) =>
+                {
+                    double result = num1 / num2;
+                    return result;
+                };
+                double result = average(CompetenceSum, competenceList.Count);
+                TBRating.Text = string.Format("{0:0.##}", result);
             }
         }
 
@@ -289,13 +330,23 @@ namespace Staff_Registry
             DG.ItemsSource = null;
             DG.ItemsSource = staffManager.StaffList;
         }
+        #endregion
 
-        private void AddEmployeeToDB(Employee employee)
+        #region Data Base 
+        private void GetDB()
         {
-            File.AppendAllText(file, $"{employee.ID},{employee.FirstName}," +
-                                     $"{employee.LastName},{(int)employee.Gender},{(int)employee.Communication}," +
-                                     $"{(int)employee.Decision_Making},{(int)employee.Problem_Solving}," +
-                                     $"{(int)employee.Listening},{(int)employee.Leadership},{(int)employee.Accuracy}\n");
+            staffManager.StaffList.Clear();
+            var lines = File.ReadAllLines(file);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i].Split(',');
+                Employee employee = new Employee(int.Parse(line[0]), line[1], line[2],
+                  (GenderType)(int.Parse(line[3])), (RatingType)int.Parse(line[4]), (RatingType)int.Parse(line[5]),
+                   (RatingType)int.Parse(line[6]), (RatingType)int.Parse(line[7]), (RatingType)int.Parse(line[8]),
+                    (RatingType)int.Parse(line[9]));
+                staffManager.StaffList.Add(employee);
+            }
+            UppdateDG();
         }
 
         private void UpdateDB()
@@ -310,5 +361,14 @@ namespace Staff_Registry
             }
             File.WriteAllText(file, lines);
         }
+
+        private void AddEmployeeToDB(Employee employee)
+        {
+            File.AppendAllText(file, $"{employee.ID},{employee.FirstName}," +
+                                     $"{employee.LastName},{(int)employee.Gender},{(int)employee.Communication}," +
+                                     $"{(int)employee.Decision_Making},{(int)employee.Problem_Solving}," +
+                                     $"{(int)employee.Listening},{(int)employee.Leadership},{(int)employee.Accuracy}\n");
+        }
+        #endregion
     }
 }
