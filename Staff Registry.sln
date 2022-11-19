@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EL", "..\EL\EL.csproj", "{1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SR_BLL.Tests", "..\SR_BLL.Tests\SR_BLL.Tests.csproj", "{3D5B4051-39A3-4E9A-A45A-4877F0DC9CAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SR_DLL-NUnitTests", "..\SR_DLL-NUnitTests\SR_DLL-NUnitTests.csproj", "{956A5E45-3BA8-4CFF-8751-6B823290D5D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3D5B4051-39A3-4E9A-A45A-4877F0DC9CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D5B4051-39A3-4E9A-A45A-4877F0DC9CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D5B4051-39A3-4E9A-A45A-4877F0DC9CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{956A5E45-3BA8-4CFF-8751-6B823290D5D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{956A5E45-3BA8-4CFF-8751-6B823290D5D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{956A5E45-3BA8-4CFF-8751-6B823290D5D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{956A5E45-3BA8-4CFF-8751-6B823290D5D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
